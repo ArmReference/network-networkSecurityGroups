@@ -1,0 +1,49 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "Name": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource name."
+      }
+    },
+    "SecurityRules": {
+      "type": "array",
+      "metadata": {
+        "description": "A collection of security rules of the network security group."
+      }
+    }
+  },
+  "variables": {
+    "comments": {
+      "documentation": "https://docs.microsoft.com/en-us/rest/api/virtualnetwork/networksecuritygroups/createorupdate#definitions_networksecuritygroup"
+    },
+    "networkSecurityGroups": {
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[parameters('Name')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "securityRules": "[parameters('SecurityRules')]"
+      }
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[parameters('Name')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "securityRules": "[parameters('SecurityRules')]"
+      }
+    }
+  ],
+  "outputs": {
+    "networkSecurityGroups": {
+      "type": "object",
+      "value": "[variables('networkSecurityGroups')]"
+    }
+  }
+}
