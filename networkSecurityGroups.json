@@ -13,6 +13,13 @@
       "metadata": {
         "description": "A collection of security rules of the network security group."
       }
+    },
+    "DependsOn": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Pass dependencies"
+      }
     }
   },
   "variables": {
@@ -24,6 +31,7 @@
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[parameters('Name')]",
       "location": "[resourceGroup().location]",
+      "dependsOn": "[if(empty(parameters('DependsOn')),json('null'),parameters('DependsOn'))]",
       "properties": {
         "securityRules": "[parameters('SecurityRules')]"
       }
@@ -35,6 +43,7 @@
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[parameters('Name')]",
       "location": "[resourceGroup().location]",
+      "dependsOn": "[if(empty(parameters('DependsOn')),json('null'),parameters('DependsOn'))]",
       "properties": {
         "securityRules": "[parameters('SecurityRules')]"
       }
